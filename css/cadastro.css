@@ -1,0 +1,263 @@
+:root {
+    color-scheme: dark;
+    --fundo: #061827;
+    --texto: #e7eef5;
+    --suave: #9aafc1;
+    --borda: #183c55;
+    --campo: rgb(3 21 37 / 78%);
+    --acento: #00c9ad;
+    --acento-hover: #00ad96;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    color: var(--texto);
+    font-family: Inter, sans-serif;
+    background: var(--fundo) url("../assets/auth-background.svg") center / cover fixed no-repeat;
+}
+
+.pagina {
+    display: grid;
+    min-height: 100vh;
+    place-items: center;
+    padding: 24px;
+    background: linear-gradient(90deg, rgb(2 15 27 / 52%), rgb(2 15 27 / 76%));
+}
+
+.painel {
+    display: grid;
+    width: min(100%, 1080px);
+    min-height: 560px;
+    grid-template-columns: .9fr 1.35fr;
+    align-items: center;
+    padding: 30px;
+    border: 1px solid rgb(53 103 133 / 38%);
+    border-radius: 8px;
+    background: rgb(2 17 30 / 55%);
+    box-shadow: 0 24px 70px rgb(0 0 0 / 24%);
+    backdrop-filter: blur(3px);
+}
+
+.apresentacao {
+    display: grid;
+    min-height: 400px;
+    align-content: center;
+    justify-items: center;
+    padding: 28px;
+    border-right: 1px solid rgb(53 103 133 / 48%);
+    text-align: center;
+}
+
+.marca-nome {
+    margin: 0;
+    color: var(--texto);
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -.6px;
+}
+
+.apresentacao-descricao {
+    max-width: 250px;
+    margin: 20px 0 32px;
+    color: #bdcddd;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.frase {
+    max-width: 250px;
+    margin: 0;
+    color: #c0cedb;
+    font-size: 12px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.cadastro-painel {
+    width: 100%;
+    max-width: 480px;
+    justify-self: center;
+    padding: 12px 32px;
+}
+
+h1 {
+    margin: 0 0 4px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.descricao {
+    margin: 0 0 22px;
+    color: var(--suave);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.formulario {
+    display: grid;
+    gap: 10px;
+}
+
+.campo input {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: var(--campo);
+    color: var(--texto);
+    font: inherit;
+    font-size: 12px;
+}
+
+.campo input::placeholder {
+    color: #91a7b9;
+}
+
+.campo input:focus {
+    border-color: var(--acento);
+    outline: 2px solid rgb(0 201 173 / 18%);
+}
+
+.botao {
+    min-height: 42px;
+    padding: 10px 14px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--texto);
+    font: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.botao:focus-visible,
+.entrar a:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 2px;
+}
+
+.botao-cadastrar {
+    margin-top: 2px;
+    border-color: var(--acento);
+    background: var(--acento);
+    color: #04201f;
+}
+
+.botao-cadastrar:hover {
+    border-color: var(--acento-hover);
+    background: var(--acento-hover);
+}
+
+.entrar {
+    margin: 20px 0 0;
+    color: var(--suave);
+    text-align: center;
+    font-size: 12px;
+}
+
+.entrar a {
+    color: var(--acento);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.entrar a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 700px) {
+    .painel {
+        grid-template-columns: .8fr 1.2fr;
+        padding: 18px;
+    }
+
+    .apresentacao {
+        padding: 20px 14px;
+    }
+
+    .cadastro-painel {
+        padding: 12px 20px;
+    }
+}
+
+@media (max-width: 520px) {
+    .pagina {
+        padding: 16px;
+    }
+
+    .painel {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 18px;
+    }
+
+    .apresentacao {
+        min-height: auto;
+        padding: 10px 8px 18px;
+        border-right: 0;
+    }
+
+    .apresentacao-descricao {
+        margin: 10px 0 0;
+    }
+
+    .frase {
+        display: none;
+    }
+
+    .cadastro-painel {
+        max-width: 480px;
+        padding: 22px 0 8px;
+        border-top: 1px solid var(--borda);
+    }
+}
+
+@media (max-height: 480px) and (min-width: 521px) {
+    .painel {
+        min-height: auto;
+        padding: 12px;
+    }
+
+    .apresentacao {
+        min-height: auto;
+        padding: 16px;
+    }
+
+    .cadastro-painel {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .descricao {
+        margin-bottom: 12px;
+        font-size: 11px;
+    }
+
+    .formulario {
+        gap: 7px;
+    }
+
+    .campo input,
+    .botao {
+        min-height: 32px;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 11px;
+    }
+
+    .entrar {
+        margin-top: 12px;
+    }
+}
