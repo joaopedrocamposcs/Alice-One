@@ -1,0 +1,252 @@
+DOCUMENTAÇÃO DO PROJETO — ALICE ONE
+===================================
+
+1. SOBRE O PROJETO
+------------------
+
+Alice One é a proposta de um site de agenda pessoal para organizar tarefas,
+compromissos e objetivos. A ideia é reunir, em uma única interface, o
+planejamento diário, o calendário, os hábitos, as metas e as anotações do
+usuário.
+
+IMPORTANTE: o repositório está em fase inicial. A estrutura de pastas e os
+nomes de arquivos indicam as áreas planejadas, mas a maioria dos arquivos
+está vazia. A tela de cadastro é uma interface inicial, não um sistema de
+cadastro funcional. As funcionalidades descritas a seguir são requisitos
+propostos e não devem ser consideradas implementadas.
+
+
+2. OBJETIVOS
+------------
+
+- Ajudar o usuário a visualizar e organizar a rotina.
+- Permitir que tarefas sejam planejadas, priorizadas e acompanhadas.
+- Relacionar tarefas e compromissos com datas em um calendário.
+- Apoiar a criação de hábitos e o acompanhamento de metas.
+- Manter anotações organizadas e acessíveis.
+- Oferecer uma experiência simples em computadores e dispositivos móveis.
+
+
+3. PERFIS DE USO E ESCOPO
+-------------------------
+
+O público previsto são pessoas que desejam organizar a rotina pessoal ou de
+estudos. O escopo inicial é uma aplicação web individual, com possibilidade
+de autenticação e sincronização em uma etapa futura.
+
+Não há atualmente contas, perfis, sincronização ou armazenamento remoto.
+
+
+4. ÁREAS FUNCIONAIS PLANEJADAS
+------------------------------
+
+4.1 Início
+
+Página de resumo contendo, futuramente:
+- tarefas do dia e tarefas atrasadas;
+- próximos compromissos;
+- progresso das metas e dos hábitos;
+- atalhos para criar uma tarefa, nota ou compromisso.
+
+Arquivo previsto: pages/inicio.html
+Módulo previsto: js/inicio.js
+Estado atual: arquivos vazios.
+
+4.2 Tarefas
+
+Funcionalidades planejadas:
+- criar, visualizar, editar e remover tarefas;
+- marcar uma tarefa como concluída ou pendente;
+- definir título, descrição, data de vencimento e prioridade;
+- filtrar tarefas por data, prioridade e estado.
+
+Modelo inicial sugerido:
+- id: identificador único;
+- titulo: texto obrigatório;
+- descricao: texto opcional;
+- vencimento: data e hora opcionais;
+- prioridade: baixa, média ou alta;
+- concluida: verdadeiro ou falso;
+- criadoEm e atualizadoEm: datas de controle.
+
+Arquivo previsto: pages/tarefas.html
+Módulo previsto: js/tarefas.js
+Estado atual: arquivos vazios.
+
+4.3 Calendário
+
+Visualização planejada de tarefas e compromissos por dia, semana ou mês.
+Deve permitir identificar datas ocupadas e abrir os detalhes do item
+selecionado.
+
+Arquivo previsto: pages/calendario.html
+Módulo previsto: js/calendario.js
+Estado atual: arquivos vazios.
+
+4.4 Hábitos
+
+Área planejada para cadastrar hábitos, registrar sua realização e acompanhar
+a frequência ao longo do tempo. A periodicidade e os indicadores ainda devem
+ser definidos antes da implementação.
+
+Arquivo previsto: pages/habitos.html
+Módulo previsto: js/habitos.js
+Estado atual: arquivos vazios.
+
+4.5 Metas
+
+Área planejada para registrar objetivos, prazos e progresso. A forma de
+medição de progresso deverá ser definida para cada tipo de meta.
+
+Arquivo previsto: pages/metas.html
+Módulo previsto: js/metas.js
+Estado atual: arquivos vazios.
+
+4.6 Anotações
+
+Área planejada para criar, editar, consultar e excluir anotações pessoais.
+Categorias, pesquisa e relação de notas com tarefas poderão ser definidos
+durante o desenvolvimento.
+
+Arquivo previsto: pages/anotacoes.html
+Módulo previsto: js/anotacoes.js
+Estado atual: arquivos vazios.
+
+4.7 Cadastro e login
+
+Existe uma página inicial de cadastro em
+pages/autenticacao/cadrastro.html, estilizada por css/cadastro.css. O
+JavaScript da página verifica se a confirmação da senha corresponde à senha
+digitada.
+
+Limitações atuais:
+- o formulário usa action="#" e não envia dados para um serviço;
+- não há criação de conta, autenticação ou sessão;
+- não há armazenamento implementado;
+- a página de login está vazia;
+- os módulos js/cadastro.js e js/login.js estão vazios.
+
+Não utilizar dados pessoais reais nessa interface até que exista um serviço
+de autenticação seguro.
+
+4.8 Configurações
+
+Área reservada para preferências do usuário, como formato de data,
+notificações e opções de aparência. As opções ainda não foram implementadas.
+
+Arquivo previsto: pages/configuraçoes.html
+Módulo previsto: js/configuracoes.js
+Estado atual: arquivos vazios.
+
+
+5. ESTADO REAL DA IMPLEMENTAÇÃO
+-------------------------------
+
+Implementado:
+- estrutura inicial de diretórios;
+- interface de cadastro com campos de nome, e-mail, senha e confirmação;
+- validação de correspondência entre senha e confirmação no navegador;
+- estilos da página de cadastro em arquivo CSS separado;
+- imagem vetorial local para o fundo da página de cadastro.
+
+Ainda não implementado:
+- conteúdo da página inicial;
+- navegação funcional entre as áreas;
+- gerenciamento de tarefas;
+- calendário funcional;
+- hábitos, metas e anotações;
+- login, criação real de contas e recuperação de senha;
+- persistência local ou remota;
+- API, banco de dados, testes automatizados e implantação.
+
+
+6. TECNOLOGIAS E ORGANIZAÇÃO
+----------------------------
+
+Tecnologias presentes ou previstas:
+- HTML para a estrutura das páginas;
+- CSS para apresentação e responsividade;
+- JavaScript nativo para interações;
+- servidor/API e banco de dados a escolher se forem necessários cadastro
+  seguro e sincronização.
+
+Não há gerenciador de pacotes, dependências ou compilação configurados.
+Atualmente, a interface de cadastro pode ser aberta diretamente no
+navegador em pages/autenticacao/cadrastro.html. O index.html está vazio e
+ainda não direciona para essa página.
+
+Principais pastas:
+
+assets/       imagens, ícones e outros recursos estáticos;
+css/          folhas de estilo;
+js/           módulos JavaScript previstos;
+pages/        páginas do site;
+documentação.txt  especificação e estado do projeto;
+README.md     apresentação e instruções rápidas.
+
+Os nomes cadrastro.html e configuraçoes.html mantêm as grafias atuais dos
+arquivos. Corrigir esses nomes posteriormente exige atualizar os links que
+os referenciam.
+
+
+7. PERSISTÊNCIA E MODELO DE DADOS
+---------------------------------
+
+A persistência ainda não foi decidida. Para uma primeira demonstração local,
+localStorage pode guardar dados apenas no navegador atual, mas não é
+adequado para senhas nem para sincronizar entre dispositivos.
+
+Para múltiplos usuários e sincronização, será necessário um backend com
+autenticação e banco de dados. Cada registro deve pertencer ao usuário
+autenticado e ter autorização verificada no servidor.
+
+Entidades inicialmente previstas:
+- Usuário: identidade e preferências; autenticação delegada a um serviço
+  seguro.
+- Tarefa: título, descrição, vencimento, prioridade e conclusão.
+- Compromisso: título, horário, duração e observações.
+- Hábito: nome, periodicidade e registros de realização.
+- Meta: título, prazo, critério de progresso e estado.
+- Anotação: título, conteúdo e datas de criação/atualização.
+
+Os campos são uma proposta inicial e podem ser refinados antes da criação
+do backend.
+
+
+8. SEGURANÇA, PRIVACIDADE E ACESSIBILIDADE
+------------------------------------------
+
+- Não armazenar senhas em texto puro ou em localStorage.
+- Validar e autorizar operações de dados no servidor quando houver backend.
+- Evitar inserir conteúdo do usuário como HTML sem sanitização.
+- Coletar apenas os dados necessários e informar como serão utilizados.
+- Rotular campos, manter navegação por teclado e indicar foco visível.
+- Verificar contraste, responsividade e mensagens de validação.
+
+As medidas de segurança do backend ainda não existem; são requisitos para
+uma etapa futura.
+
+
+9. ROTEIRO SUGERIDO
+-------------------
+
+1. Definir a página inicial e a navegação do produto.
+2. Implementar o fluxo de tarefas e validar as interações básicas.
+3. Escolher persistência local para protótipo ou backend para uso real.
+4. Conectar calendário às tarefas e compromissos.
+5. Criar hábitos, metas e anotações.
+6. Implementar autenticação apenas com uma solução segura apropriada.
+7. Adicionar testes de interface e lógica, acessibilidade e instruções de
+   implantação.
+
+
+10. COMO MANTER ESTA DOCUMENTAÇÃO
+---------------------------------
+
+Ao implementar uma funcionalidade:
+- atualizar README.md e esta documentação;
+- diferenciar claramente o que está pronto do que está planejado;
+- registrar instruções reais para executar e testar;
+- atualizar caminhos caso arquivos com grafia antiga sejam renomeados;
+- documentar decisões sobre armazenamento e autenticação antes de tratar
+  dados reais.
