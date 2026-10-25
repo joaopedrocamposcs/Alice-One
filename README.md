@@ -2,7 +2,7 @@
 
 Agenda web para organizar tarefas, compromissos e objetivos em um só lugar. A proposta do Alice One é ajudar cada pessoa a planejar a rotina, acompanhar o que precisa ser feito e manter seus hábitos e anotações acessíveis.
 
-> **Estado atual:** o projeto está em desenvolvimento. A tela de cadastro tem uma interface inicial; as demais páginas e arquivos JavaScript são apenas estrutura reservada. Ainda não existe autenticação funcional, gravação de dados ou integração com um servidor.
+> **Estado atual:** o projeto está em desenvolvimento. As telas de cadastro e login têm interfaces iniciais; as demais páginas e módulos JavaScript são estrutura reservada. Ainda não existe autenticação funcional, gravação de dados ou integração com um servidor.
 
 ## Visão do produto
 
@@ -32,7 +32,7 @@ Não há dependências de projeto ou processo de compilação configurados.
 
 Também é possível servir a pasta do projeto localmente, por exemplo com a extensão **Live Server** do Visual Studio Code. Não é necessário instalar dependências para a interface estática existente.
 
-Os estilos específicos da tela de cadastro estão em [`css/cadastro.css`](./css/cadastro.css), e o fundo local usado por ela está em [`assets/auth-background.svg`](./assets/auth-background.svg).
+Os estilos específicos das telas de autenticação estão em [`css/cadastro.css`](./css/cadastro.css) e [`css/login.css`](./css/login.css). Ambas usam o fundo local [`assets/auth-background.svg`](./assets/auth-background.svg).
 
 ## Estrutura do projeto
 
@@ -47,6 +47,7 @@ Os estilos específicos da tela de cadastro estão em [`css/cadastro.css`](./css
 │   └── img/
 ├── css/
 │   ├── cadastro.css
+│   ├── login.css
 │   ├── responsivo.css
 │   └── style.css
 ├── js/
@@ -81,7 +82,7 @@ Arquivos vazios são pontos de partida reservados para futuras páginas e módul
 | Área | Estado |
 | --- | --- |
 | Cadastro | Interface HTML/CSS e validação de confirmação de senha no navegador. Não cria conta nem envia dados a um serviço. |
-| Login | Arquivo reservado; vazio. |
+| Login | Interface HTML/CSS inicial. Não autentica usuários nem envia dados a um serviço. |
 | Início | Arquivo reservado; vazio. |
 | Tarefas | Arquivo reservado; vazio. |
 | Calendário | Arquivo reservado; vazio. |
@@ -103,7 +104,7 @@ Arquivos vazios são pontos de partida reservados para futuras páginas e módul
 
 ## Segurança e dados
 
-A tela atual é apenas uma interface no navegador. Não informe dados reais: eles não são enviados a um sistema de cadastro. Em uma futura implementação, senhas devem ser tratadas por um serviço seguro de autenticação e nunca armazenadas em texto puro no navegador.
+As telas atuais são apenas interfaces no navegador. Não informe dados reais: os formulários não enviam dados a um sistema de autenticação. Em uma futura implementação, senhas devem ser tratadas por um serviço seguro e nunca armazenadas em texto puro no navegador.
 
 ## Documentação adicional
 

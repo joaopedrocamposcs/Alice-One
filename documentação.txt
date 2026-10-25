@@ -9,11 +9,10 @@ compromissos e objetivos. A ideia é reunir, em uma única interface, o
 planejamento diário, o calendário, os hábitos, as metas e as anotações do
 usuário.
 
-IMPORTANTE: o repositório está em fase inicial. A estrutura de pastas e os
-nomes de arquivos indicam as áreas planejadas, mas a maioria dos arquivos
-está vazia. A tela de cadastro é uma interface inicial, não um sistema de
-cadastro funcional. As funcionalidades descritas a seguir são requisitos
-propostos e não devem ser consideradas implementadas.
+IMPORTANTE: o repositório está em fase inicial. As telas de cadastro e login
+são interfaces iniciais, não sistemas funcionais de autenticação. As demais
+áreas ainda são estrutura reservada. As funcionalidades descritas a seguir
+são requisitos propostos e não devem ser consideradas implementadas.
 
 
 2. OBJETIVOS
@@ -114,19 +113,18 @@ Estado atual: arquivos vazios.
 
 4.7 Cadastro e login
 
-Existe uma página inicial de cadastro em
-pages/autenticacao/cadrastro.html, estilizada por css/cadastro.css. O
-JavaScript da página verifica se a confirmação da senha corresponde à senha
-digitada.
+Existem interfaces iniciais em pages/autenticacao/cadrastro.html e
+pages/autenticacao/login.html, estilizadas respectivamente por
+css/cadastro.css e css/login.css. O cadastro verifica se a confirmação da
+senha corresponde à senha digitada.
 
 Limitações atuais:
-- o formulário usa action="#" e não envia dados para um serviço;
+- os formulários usam action="#" e não enviam dados para um serviço;
 - não há criação de conta, autenticação ou sessão;
 - não há armazenamento implementado;
-- a página de login está vazia;
 - os módulos js/cadastro.js e js/login.js estão vazios.
 
-Não utilizar dados pessoais reais nessa interface até que exista um serviço
+Não utilizar dados pessoais reais nessas interfaces até que exista um serviço
 de autenticação seguro.
 
 4.8 Configurações
@@ -171,9 +169,10 @@ Tecnologias presentes ou previstas:
   seguro e sincronização.
 
 Não há gerenciador de pacotes, dependências ou compilação configurados.
-Atualmente, a interface de cadastro pode ser aberta diretamente no
-navegador em pages/autenticacao/cadrastro.html. O index.html está vazio e
-ainda não direciona para essa página.
+Atualmente, as interfaces de cadastro e login podem ser abertas diretamente
+no navegador em pages/autenticacao/cadrastro.html e
+pages/autenticacao/login.html. O index.html está vazio e ainda não direciona
+para essas páginas.
 
 Principais pastas:
 
