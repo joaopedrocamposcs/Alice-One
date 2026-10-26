@@ -1,11 +1,12 @@
 :root {
     color-scheme: dark;
+    --fundo: #140c24;
     --texto: #e7eef5;
-    --suave: #9aafc1;
-    --borda: #183c55;
-    --campo: rgb(3 21 37 / 78%);
-    --acento: #00c9ad;
-    --acento-hover: #00ad96;
+    --suave: #c0b4d2;
+    --borda: #49345f;
+    --campo: rgb(23 14 38 / 88%);
+    --acento: #9333ea;
+    --acento-hover: #7e22ce;
 }
 
 * {
@@ -17,7 +18,14 @@ body {
     margin: 0;
     color: var(--texto);
     font-family: Inter, sans-serif;
-    background: #061827 url("../assets/auth-background.svg") center / cover fixed no-repeat;
+    background-color: var(--fundo);
+    background-image:
+        linear-gradient(135deg, rgb(48 24 73 / 32%), rgb(20 12 36 / 48%)),
+        url("../assets/auth-background.svg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
 }
 
 .pagina {
@@ -25,7 +33,7 @@ body {
     min-height: 100vh;
     place-items: center;
     padding: 24px;
-    background: linear-gradient(90deg, rgb(2 15 27 / 52%), rgb(2 15 27 / 76%));
+    background: linear-gradient(90deg, rgb(25 12 40 / 24%), rgb(20 12 36 / 42%));
 }
 
 .painel {
@@ -35,9 +43,9 @@ body {
     grid-template-columns: .9fr 1.35fr;
     align-items: center;
     padding: 30px;
-    border: 1px solid rgb(53 103 133 / 38%);
+    border: 1px solid rgb(168 85 247 / 34%);
     border-radius: 8px;
-    background: rgb(2 17 30 / 55%);
+    background: rgb(27 16 43 / 62%);
     box-shadow: 0 24px 70px rgb(0 0 0 / 24%);
     backdrop-filter: blur(3px);
 }
@@ -48,7 +56,7 @@ body {
     align-content: center;
     justify-items: center;
     padding: 28px;
-    border-right: 1px solid rgb(53 103 133 / 48%);
+    border-right: 1px solid rgb(168 85 247 / 38%);
     text-align: center;
 }
 
@@ -62,7 +70,7 @@ body {
 .apresentacao-descricao {
     max-width: 250px;
     margin: 20px 0 32px;
-    color: #bdcddd;
+    color: #d0c4df;
     font-size: 14px;
     line-height: 1.6;
 }
@@ -70,7 +78,7 @@ body {
 .frase {
     max-width: 280px;
     margin: 0;
-    color: #c0cedb;
+    color: #d0c4df;
     font-size: 12px;
     font-style: italic;
     line-height: 1.6;
@@ -124,12 +132,12 @@ body {
 }
 
 .campo input::placeholder {
-    color: #91a7b9;
+    color: #aa9bbd;
 }
 
 .campo input:focus {
     border-color: var(--acento);
-    outline: 2px solid rgb(0 201 173 / 18%);
+    outline: 2px solid rgb(168 85 247 / 24%);
 }
 
 .lembrar {
@@ -155,7 +163,7 @@ body {
     border: 1px solid var(--acento);
     border-radius: 6px;
     background: var(--acento);
-    color: #04201f;
+    color: #ffffff;
     font: inherit;
     font-size: 12px;
     font-weight: 700;
