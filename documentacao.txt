@@ -1,0 +1,619 @@
+ALICEFLOW - DOCUMENTAÇÃO TÉCNICA
+================================
+
+Índice
+
+  1. Visão geral
+  2. Como rodar
+  3. Estrutura de arquivos
+  4. Fluxo do usuário
+  5. Arquitetura
+  6. Armazenamento de dados
+  7. Referência: storage.js
+  8. Referência: app.js
+  9. Referência por página
+  10. Estilo e tema
+  11. Segurança e limites
+  12. Como adicionar uma nova página
+  13. Checklist de testes manuais
+  14. Problemas comuns
+  15. Git e versionamento
+  16. Próximos passos
+
+
+1. VISÃO GERAL
+--------------
+
+O AliceFlow é uma agenda pessoal que roda inteira no navegador. Não existe
+servidor, banco de dados nem build. Quem entra no app tem uma conta local e
+acessa tarefas, calendário, hábitos, metas e anotações.
+
+Princípios do projeto:
+
+  - Sem dependências: só HTML, CSS e JavaScript.
+  - Um único ponto de acesso aos dados (storage.js).
+  - Código comum às páginas internas concentrado em app.js.
+  - Cada página tem o próprio arquivo JS, com uma função draw() que desenha
+    a tela a partir dos dados salvos.
+
+
+2. COMO RODAR
+-------------
+
+Opção 1: abrir o index.html direto no navegador.
+
+Opção 2 (recomendada): VS Code com a extensão Live Server.
+  Botão direito em index.html > Open with Live Server.
+
+Requisitos: qualquer navegador atual (Chrome, Edge, Firefox, Safari).
+Internet é usada só para carregar as fontes do Google Fonts. Sem internet o
+app funciona com a fonte padrão do sistema.
+
+
+3. ESTRUTURA DE ARQUIVOS
+------------------------
+
+Raiz
+  index.html            Página inicial (landing).
+  README.md             Apresentação rápida do projeto.
+  documentacao.txt      Este arquivo.
+  .gitignore            Arquivos ignorados pelo Git.
+  assets/               Pasta para imagens e ícones. Hoje está vazia.
+
+css/
+  style.css             Variáveis de cor, tipografia e todos os componentes.
+  responsivo.css        Regras para telas de até 760px (menu vira barra
+                        inferior, colunas viram uma só).
+  login.css             Cartão central das telas de login e cadastro.
+  cadastro.css          Detalhe exclusivo do cadastro (texto de dica).
+  landing.css           Topo, capa e cartões de recursos do index.html.
+
+js/
+  storage.js            Acesso ao localStorage, usuários e sessão.
+  app.js                Proteção de rota, menu, tema e funções comuns.
+  landing.js            Ajusta os botões do index.html se já houver login.
+  login.js              Valida e-mail e senha.
+  cadastro.js           Valida e cria a conta.
+  inicio.js             Painel do dia.
+  tarefas.js            Lista de tarefas com filtros.
+  calendario.js         Calendário mensal.
+  habitos.js            Hábitos e sequência de dias.
+  metas.js              Metas com barra de progresso.
+  anotacoes.js          Anotações com busca.
+  configuracoes.js      Nome, tema, apagar dados e excluir conta.
+
+pages/
+  inicio.html, tarefas.html, calendario.html, habitos.html, metas.html,
+  anotacoes.html, configuracoes.html     Páginas internas (exigem login).
+  autenticacao/login.html, cadastro.html Páginas públicas de acesso.
+
+
+4. FLUXO DO USUÁRIO
+-------------------
+
+  1. Abre index.html e clica em "Começar agora".
+  2. Preenche o cadastro. Ao concluir, a conta é criada, a sessão é aberta
+     e ele vai para pages/inicio.html.
+  3. Usa as páginas pelo menu lateral.
+  4. Clica em "Sair" para encerrar a sessão (os dados continuam salvos).
+  5. Na próxima visita, entra pelo login com e-mail e senha.
+
+Regras de redirecionamento:
+
+  - Página interna sem sessão válida: vai para autenticacao/login.html.
+  - Login ou cadastro com sessão válida: vai para ../inicio.html.
+  - index.html com sessão válida: o botão principal vira "Abrir meu painel"
+    e os botões de criar conta somem.
+
+
+5. ARQUITETURA
+--------------
+
+5.1 Ordem de carregamento dos scripts
+
+Páginas internas:
+  storage.js > app.js > <pagina>.js
+
+Páginas de login e cadastro:
+  storage.js > login.js (ou cadastro.js)
+
+index.html:
+  storage.js > landing.js
+
+O app.js não é carregado nas páginas públicas porque ele redireciona quem
+não está logado.
+
+5.2 Contrato de uma página interna
+
+O HTML precisa ter:
+
+  - <body data-page="nome">  onde "nome" é o mesmo id usado em PAGES (app.js).
+  - <nav id="nav"></nav>     o app.js preenche o menu aqui.
+  - <h2 id="titulo">         título da página.
+  - Os ids que o script da página usa (veja a seção 9).
+
+5.3 Padrão de cada script de página
+
+  1. Uma função draw() lê os dados com Store.get e monta o HTML da tela.
+  2. Eventos de formulário e de clique gravam com Store.set e chamam draw().
+  3. Cliques em listas usam delegação: um listener no container e
+     e.target.closest("[data-a]") para descobrir qual botão foi usado.
+
+5.4 Atributos data-
+
+  data-a    ação do botão (tt, td, hd, hx, gm, gx)
+  data-id   id do item afetado
+  data-d    data no formato AAAA-MM-DD
+  data-n    passo numérico (-1 ou 1)
+  data-v    valor do filtro de tarefas
+
+Significado das ações:
+  tt  alternar tarefa concluída
+  td  excluir tarefa
+  hd  marcar ou desmarcar um dia do hábito
+  hx  excluir hábito
+  gm  somar ou subtrair progresso da meta
+  gx  excluir meta
+
+
+6. ARMAZENAMENTO DE DADOS
+-------------------------
+
+Tudo em localStorage, com o prefixo "af:".
+
+Chaves:
+  af:users              lista de usuários
+  af:session            id do usuário logado
+  af:<id>:tasks         tarefas do usuário
+  af:<id>:habits        hábitos do usuário
+  af:<id>:goals         metas do usuário
+  af:<id>:notes         anotações do usuário
+  af:<id>:cfg           preferências do usuário
+
+Formato dos objetos:
+
+  Usuário
+    { id, nome, email, senha }
+    senha é o hash SHA-256 em hexadecimal. O e-mail é salvo em minúsculas.
+
+  Tarefa
+    { id, t, d, done }
+    t = texto, d = data (AAAA-MM-DD), done = true ou false.
+
+  Hábito
+    { id, n, days }
+    n = nome, days = lista de datas (AAAA-MM-DD) em que foi cumprido.
+
+  Meta
+    { id, n, cur, tot }
+    n = nome, cur = progresso atual, tot = total. O progresso fica sempre
+    entre 0 e tot.
+
+  Anotação
+    { id, t, c, d }
+    t = título, c = conteúdo, d = data de criação (AAAA-MM-DD).
+
+  Preferências
+    { theme }
+    theme = "auto", "light" ou "dark".
+
+Ids são strings aleatórias de até 7 caracteres geradas por uid().
+
+Datas sempre no formato AAAA-MM-DD. Esse formato ordena corretamente como
+texto e evita problema de fuso horário nas comparações.
+
+
+7. REFERÊNCIA: storage.js
+-------------------------
+
+Define o atalho $ (document.querySelector) e o objeto Store.
+
+  $(seletor)
+    Atalho para document.querySelector.
+
+  Store.read(chave, padrao)
+    Lê e converte o JSON de "af:" + chave. Retorna padrao se não existir
+    ou se der erro.
+
+  Store.write(chave, valor)
+    Grava o valor como JSON em "af:" + chave. Erros são ignorados.
+
+  Store.users()
+    Lista de usuários cadastrados.
+
+  Store.session()
+    Id do usuário logado ou null.
+
+  Store.login(id)
+    Abre a sessão.
+
+  Store.logout()
+    Fecha a sessão.
+
+  Store.user()
+    Objeto do usuário logado ou null.
+
+  Store.get(colecao, padrao = [])
+    Lê uma coleção do usuário logado. Exemplo: Store.get("tasks").
+
+  Store.set(colecao, valor)
+    Grava uma coleção do usuário logado.
+
+  Store.wipe()
+    Apaga todas as coleções do usuário logado. Não apaga a conta.
+
+  Store.hash(texto)    (assíncrona)
+    Retorna o SHA-256 do texto em hexadecimal. Se a Web Crypto API não
+    estiver disponível, usa base64 como alternativa (veja a seção 11).
+
+
+8. REFERÊNCIA: app.js
+---------------------
+
+Funções auxiliares:
+
+  pad(n)         Número com dois dígitos ("07").
+  iso(data)      Date para "AAAA-MM-DD".
+  today()        Data de hoje em AAAA-MM-DD.
+  fmt(chave)     "AAAA-MM-DD" para "20 de nov." (formato curto pt-BR).
+  esc(texto)     Escapa & < > " ' para evitar HTML injetado.
+  uid()          Gera um id aleatório.
+
+Constantes:
+
+  PAGES          Lista [id, rótulo] das páginas do menu.
+  me             Usuário logado (ou null).
+  theme          Tema salvo: "auto", "light" ou "dark".
+
+Comportamento ao carregar:
+
+  1. Se não houver usuário logado, esconde a página e redireciona para
+     autenticacao/login.html.
+  2. Se o tema não for "auto", aplica data-theme no elemento <html>.
+  3. Monta o menu dentro de #nav, marca a página atual com a classe "on" e
+     liga o botão "Sair".
+
+Funções de tarefa compartilhadas (usadas em início, tarefas e calendário):
+
+  taskRow(tarefa)        Retorna o <li> de uma tarefa.
+  taskList(lista)        Retorna a <ul> ou a mensagem de lista vazia.
+  bindTasks(el, depois)  Liga ao container "el" o clique de concluir e
+                         excluir. Após gravar, chama depois().
+
+Importante: sempre use esc() ao colocar texto digitado pelo usuário dentro
+de HTML montado em string. É isso que impede que alguém grave uma tag e
+quebre a página.
+
+
+9. REFERÊNCIA POR PÁGINA
+------------------------
+
+index.html
+  Ids: #entrar, #criar, #topo-criar.
+  Script: landing.js.
+  Mostra a apresentação e os links para login e cadastro.
+
+autenticacao/login.html
+  Ids: #f (campos email e senha), #erro.
+  Script: login.js.
+  Busca o usuário pelo e-mail em minúsculas e compara o hash da senha.
+  Erro mostrado: "E-mail ou senha incorretos." (a mensagem é a mesma para
+  e-mail inexistente e senha errada, de propósito).
+
+autenticacao/cadastro.html
+  Ids: #f (campos nome, email, senha, conf), #erro.
+  Script: cadastro.js.
+  Validações, nesta ordem:
+    1. Senha com no mínimo 6 caracteres.
+    2. Senha e confirmação iguais.
+    3. E-mail ainda não cadastrado.
+
+pages/inicio.html
+  Ids: #titulo, #hero, #stats, #hoje, #hab.
+  Script: inicio.js.
+  - Título muda conforme o horário: Bom dia (antes das 12h), Boa tarde
+    (antes das 18h) e Boa noite.
+  - O anel mostra o percentual de tarefas de hoje já concluídas.
+  - Os três contadores: tarefas pendentes hoje, hábitos feitos hoje e
+    média de progresso das metas.
+  - Hábitos de hoje podem ser marcados direto aqui.
+
+pages/tarefas.html
+  Ids: #f (campos t e d), #chips, #lista.
+  Script: tarefas.js.
+  - Data começa preenchida com hoje.
+  - Filtros: todas, hoje, pendentes e concluídas.
+  - A lista é ordenada pela data, da mais antiga para a mais nova.
+  - O filtro escolhido não é salvo; ao recarregar volta para "todas".
+
+pages/calendario.html
+  Ids: #mes, #grade, #dia, #f (campo t), #lista.
+  Script: calendario.js.
+  - As setas mudam o mês. O dia de hoje tem borda destacada.
+  - Uma bolinha verde marca os dias que têm ao menos uma tarefa.
+  - Novos compromissos entram na data do dia selecionado e aparecem
+    também na página de tarefas.
+
+pages/habitos.html
+  Ids: #f (campo n), #lista.
+  Script: habitos.js.
+  - Cada hábito mostra os últimos 7 dias, com a inicial do dia da semana.
+    Clicar em um quadrado marca ou desmarca aquele dia.
+  - A sequência conta dias consecutivos para trás. Se hoje ainda não foi
+    marcado, a contagem começa por ontem, então a sequência não zera antes
+    do fim do dia.
+
+pages/metas.html
+  Ids: #f (campos n e tot), #lista.
+  Script: metas.js.
+  - O total mínimo é 1.
+  - Os botões - e + mudam o progresso de 1 em 1, sempre entre 0 e o total.
+
+pages/anotacoes.html
+  Ids: #f (campos t e c), #busca, #lista.
+  Script: anotacoes.js.
+  - Aceita título e texto; se o título ficar vazio, vira "Sem título".
+  - Não salva nota completamente vazia.
+  - A busca procura no título e no texto enquanto você digita.
+  - As mais recentes aparecem primeiro.
+
+pages/configuracoes.html
+  Ids: #f (campos nome e tema), #ok, #limpar, #excluir.
+  Script: configuracoes.js.
+  - Salvar altera o nome e o tema. O tema é aplicado na hora.
+  - "Apagar meus dados" remove tarefas, hábitos, metas, anotações e
+    preferências, mas mantém a conta.
+  - "Excluir minha conta" remove tudo, encerra a sessão e volta ao login.
+  - As duas ações pedem confirmação.
+
+
+10. ESTILO E TEMA
+-----------------
+
+Variáveis de cor (css/style.css):
+
+  --bg   fundo da página
+  --card fundo de cartões e campos
+  --tx   texto principal
+  --mu   texto secundário
+  --ln   linhas e bordas
+  --ac   cor de destaque
+  --on   texto sobre a cor de destaque
+  --ok   sucesso
+  --bad  erro e ações destrutivas
+
+Tema:
+
+  - Automático: segue o sistema (prefers-color-scheme).
+  - Claro ou escuro: o JavaScript define data-theme="light" ou
+    data-theme="dark" no elemento <html> e isso vence a preferência do
+    sistema.
+  - As cores do tema escuro estão em dois blocos do CSS (um para o modo
+    automático, outro para a escolha manual). Se mudar uma cor escura,
+    mude nos dois.
+
+Tipografia: Sora nos títulos e Source Sans 3 no texto. Ambas carregam do
+Google Fonts por @import no topo do style.css.
+
+Classes principais:
+
+  .box        cartão com borda
+  .row        linha de lista (tarefa ou hábito)
+  .row.done   item concluído (texto riscado)
+  .chip       botão em formato de pílula (filtros, navegação do mês)
+  .chip.on    filtro ativo
+  .btn        botão principal
+  .btn.vazado botão secundário com borda
+  .btn.perigo botão de ação destrutiva
+  .x          botão "×" de excluir
+  .day        dia do calendário (.sel = selecionado, .now = hoje)
+  .dot        quadrado de hábito (.on = cumprido)
+  .bar        barra de progresso das metas
+  .nota       cartão de anotação
+  .campo      rótulo e campo empilhados nos formulários
+  .empty      mensagem de lista vazia
+
+Responsividade (css/responsivo.css), até 760px:
+
+  - O menu lateral vira uma barra fixa na parte de baixo.
+  - Logo, slogan e botão "Sair" somem. Para sair no celular, use a página
+    de Ajustes ou aumente o menu se preferir manter o botão.
+  - Contadores e colunas viram uma coluna só.
+
+Acessibilidade já aplicada: rótulos em todos os campos, aria-label nos
+botões só com símbolo, foco visível no teclado, animação desligada para
+quem usa "reduzir movimento".
+
+
+11. SEGURANÇA E LIMITES
+-----------------------
+
+O que está protegido:
+
+  - Texto digitado é escapado antes de ir para o HTML (função esc).
+  - A senha não é guardada em texto puro, só o hash SHA-256.
+  - Páginas internas exigem sessão.
+
+O que NÃO está protegido, e por quê:
+
+  - Não existe servidor. Qualquer pessoa com acesso ao navegador pode abrir
+    o localStorage e ver as contas, os hashes e todos os dados.
+  - O hash não usa sal, então senhas comuns são fáceis de descobrir por
+    tabelas prontas.
+  - A proteção de rota roda no navegador e pode ser contornada. Serve para
+    organizar o fluxo, não para segurança real.
+  - A sessão nunca expira.
+  - Se a Web Crypto API não estiver disponível (acontece em alguns
+    contextos que não são https nem localhost), o hash cai para base64, que
+    é apenas codificação e não protege nada. Além disso, uma conta criada
+    nesse modo não consegue entrar quando a API estiver disponível, porque
+    os dois valores são diferentes. Use sempre o mesmo ambiente (Live
+    Server ou o mesmo modo de abertura) do cadastro ao login.
+
+Conclusão prática: é um projeto de estudo. Não guarde dados sensíveis e não
+use senhas reais.
+
+Limites do localStorage:
+
+  - Cerca de 5 MB por origem. Para uma agenda pessoal é muito espaço.
+  - Os dados são por navegador e por perfil. Outro navegador ou aparelho
+    começa vazio.
+  - Limpar os dados do site apaga tudo, inclusive as contas.
+  - Abrir por file:// e por Live Server (http://127.0.0.1) conta como
+    origens diferentes, então os dados de um não aparecem no outro.
+
+
+12. COMO ADICIONAR UMA NOVA PÁGINA
+----------------------------------
+
+Exemplo: uma página "diario".
+
+  1. Crie pages/diario.html copiando o modelo de pages/habitos.html.
+     Troque o title, o data-page="diario", o <h2> e o conteúdo do <main>.
+     No final, carregue ../js/diario.js.
+
+  2. Crie js/diario.js com uma função draw() e os eventos. Use sempre:
+       Store.get("diario") para ler
+       Store.set("diario", lista) para gravar
+       esc(texto) ao montar HTML
+
+  3. Em js/app.js, acrescente em PAGES:
+       ["diario","Diário"]
+     O menu atualiza sozinho em todas as páginas.
+
+  4. Se a página precisar de estilo novo, acrescente no css/style.css.
+
+  5. Se a coleção fizer parte dos dados do usuário e você quiser que
+     "Apagar meus dados" a limpe, nada a fazer: o Store.wipe() apaga todas
+     as chaves que começam com af:<id>:.
+
+
+13. CHECKLIST DE TESTES MANUAIS
+-------------------------------
+
+Acesso
+  [ ] Cadastro com senha curta mostra erro.
+  [ ] Cadastro com senhas diferentes mostra erro.
+  [ ] Cadastro com e-mail repetido mostra erro.
+  [ ] Cadastro correto entra direto no painel.
+  [ ] Login com senha errada mostra erro.
+  [ ] Login correto leva ao início.
+  [ ] Abrir pages/tarefas.html sem login redireciona ao login.
+  [ ] "Sair" encerra a sessão.
+
+Tarefas
+  [ ] Criar, concluir e excluir.
+  [ ] Cada filtro mostra o conjunto certo.
+  [ ] Tarefa com data de hoje aparece no início.
+
+Calendário
+  [ ] Trocar de mês para frente e para trás.
+  [ ] Dia com tarefa mostra a bolinha.
+  [ ] Compromisso criado no calendário aparece em Tarefas.
+
+Hábitos
+  [ ] Marcar e desmarcar um dia.
+  [ ] Sequência aumenta com dias seguidos.
+  [ ] Marcar pelo início reflete na página de hábitos.
+
+Metas
+  [ ] O progresso não passa do total nem fica abaixo de zero.
+
+Anotações
+  [ ] Criar com e sem título.
+  [ ] Busca filtra enquanto digita.
+
+Ajustes e tema
+  [ ] Mudar o nome reflete na saudação do início.
+  [ ] Os três temas funcionam e persistem ao recarregar.
+  [ ] "Apagar meus dados" mantém a conta.
+  [ ] "Excluir minha conta" impede novo login com ela.
+
+Isolamento
+  [ ] Duas contas diferentes não veem os dados uma da outra.
+
+Layout
+  [ ] Tela de 375px de largura (modo celular do F12) sem rolagem lateral.
+  [ ] Menu inferior aparece e funciona no celular.
+
+Segurança básica
+  [ ] Criar uma tarefa com o texto <b>teste</b> mostra o texto literal e
+      não deixa a palavra em negrito.
+
+
+14. PROBLEMAS COMUNS
+--------------------
+
+Página em branco ao abrir pages/algo.html
+  Sem login a página é escondida e redireciona. Entre pelo index.html.
+
+"Store is not defined" ou "$ is not defined" no console
+  A ordem dos <script> está errada ou o caminho do storage.js está
+  incorreto. Dentro de pages/ o caminho é ../js/storage.js; dentro de
+  pages/autenticacao/ é ../../js/storage.js.
+
+Estilo não carrega
+  Confira o caminho do CSS: ../css/ nas páginas de pages/ e ../../css/ nas
+  de pages/autenticacao/.
+
+Fiz o cadastro mas o login diz que está incorreto
+  Veja a seção 11 sobre o hash. Cadastre e entre sempre pelo mesmo modo de
+  abertura. Se já estiver preso nisso, limpe o localStorage do site e crie
+  a conta de novo.
+
+Os dados sumiram
+  Você abriu por outro endereço (file:// em vez do Live Server, ou outra
+  porta) ou limpou os dados do navegador.
+
+Tema não muda
+  Salve em Ajustes. A escolha "Automático" segue o sistema operacional.
+
+Fontes diferentes do esperado
+  Sem internet o Google Fonts não carrega e entra a fonte do sistema.
+
+Para inspecionar os dados
+  F12 > Application > Local Storage > endereço do site. Procure as chaves
+  que começam com af:.
+
+
+15. GIT E VERSIONAMENTO
+-----------------------
+
+Sugestão de fluxo simples:
+
+  - Um commit por funcionalidade ou correção, com mensagem curta no
+    imperativo. Exemplos:
+      "Adiciona filtro de tarefas por data"
+      "Corrige sequência de hábitos"
+      "Ajusta menu no celular"
+
+  - Antes de commitar, rode o app e passe pelo checklist da seção 13 nas
+    áreas que você mexeu.
+
+  - O .gitignore já ignora node_modules, .DS_Store, Thumbs.db e .vscode.
+
+  - Se um dia publicar no GitHub Pages, funciona sem mudança: todos os
+    caminhos são relativos.
+
+
+16. PRÓXIMOS PASSOS
+-------------------
+
+Melhorias de uso:
+  - Editar tarefas, anotações, hábitos e metas.
+  - Prioridade, categorias e etiquetas nas tarefas.
+  - Tarefas recorrentes (diária, semanal, mensal).
+  - Horário nos compromissos e visão de semana no calendário.
+  - Exportar e importar dados em JSON (bom também como backup).
+  - Lembretes com a Notification API.
+
+Melhorias de código:
+  - Salvar o filtro de tarefas escolhido.
+  - Extrair o HTML repetido das páginas internas.
+  - Separar as cores do tema escuro em um único bloco.
+  - Testes automatizados para as funções de data e de sequência.
+
+Segurança e sincronização:
+  - Backend com banco de dados e autenticação de verdade.
+  - Hash de senha com sal feito no servidor.
+  - Sessão com expiração.

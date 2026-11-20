@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Criar conta | AliceFlow</title>
+<link rel="stylesheet" href="../../css/style.css">
+<link rel="stylesheet" href="../../css/login.css">
+<link rel="stylesheet" href="../../css/cadastro.css">
+</head>
+<body>
+<main class="auth">
+<div class="cartao">
+<h1>Criar conta</h1>
+<p>Leva menos de um minuto.</p>
+<form id="f">
+<div class="campo"><label for="nome">Nome</label><input type="text" id="nome" name="nome" required autocomplete="name"></div>
+<div class="campo"><label for="email">E-mail</label><input type="email" id="email" name="email" required autocomplete="email"></div>
+<div class="campo"><label for="senha">Senha</label><input type="password" id="senha" name="senha" required autocomplete="new-password"><span class="dica">Mínimo de 6 caracteres.</span></div>
+<div class="campo"><label for="conf">Confirmar senha</label><input type="password" id="conf" name="conf" required autocomplete="new-password"></div>
+<p class="erro" id="erro" role="alert"></p>
+<button class="btn">Criar conta</button>
+</form>
+<p class="troca">Já tem conta? <a href="login.html">Entrar</a></p>
+</div>
+</main>
+<script src="../../js/storage.js"></script>
+<script src="../../js/cadastro.js"></script>
+</body>
+</html>

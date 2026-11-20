@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calendário | AliceFlow</title>
+<link rel="stylesheet" href="../css/style.css">
+<link rel="stylesheet" href="../css/responsivo.css">
+</head>
+<body data-page="calendario">
+<nav id="nav"></nav>
+<main>
+<h2 id="titulo">Calendário</h2>
+<div class="mes" id="mes"></div>
+<div class="grid" id="grade"></div>
+<div class="box">
+<h3 id="dia"></h3>
+<form id="f">
+<input type="text" name="t" placeholder="Novo compromisso" required aria-label="Compromisso">
+<button class="btn">Adicionar</button>
+</form>
+<div id="lista"></div>
+</div>
+</main>
+<script src="../js/storage.js"></script>
+<script src="../js/app.js"></script>
+<script src="../js/calendario.js"></script>
+</body>
+</html>

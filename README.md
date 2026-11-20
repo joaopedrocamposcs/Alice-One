@@ -1,111 +1,147 @@
-# Alice One
+# AliceFlow
 
-Agenda web para organizar tarefas, compromissos e objetivos em um só lugar. A proposta do Alice One é ajudar cada pessoa a planejar a rotina, acompanhar o que precisa ser feito e manter seus hábitos e anotações acessíveis.
+Agenda pessoal com tarefas, calendário, hábitos, metas e anotações. Feita só com HTML, CSS e JavaScript, sem framework e sem servidor. Cada usuário tem conta própria e os dados ficam salvos no navegador.
 
-> **Estado atual:** o projeto está em desenvolvimento. As telas de cadastro e login têm interfaces iniciais; as demais páginas e módulos JavaScript são estrutura reservada. Ainda não existe autenticação funcional, gravação de dados ou integração com um servidor.
+## Funcionalidades
 
-## Visão do produto
-
-O site pretende oferecer:
-
-- uma página inicial com resumo da rotina e próximos compromissos;
-- gerenciamento de tarefas com prazo, prioridade e estado;
-- calendário para visualizar tarefas e eventos por data;
-- acompanhamento de hábitos e metas;
-- anotações pessoais;
-- cadastro, login e configurações de conta.
-
-Esses itens descrevem o escopo planejado, não funcionalidades já disponíveis.
+- **Conta de usuário:** cadastro, login e logout. Cada conta enxerga apenas os próprios dados.
+- **Início:** saudação, anel de progresso das tarefas do dia, contadores e atalhos para tarefas e hábitos de hoje.
+- **Tarefas:** criar com data, concluir, excluir e filtrar por todas, hoje, pendentes ou concluídas.
+- **Calendário:** visão mensal com marcação nos dias que têm tarefa. Clicar em um dia mostra e cria compromissos.
+- **Hábitos:** marcação dos últimos 7 dias e contagem de dias seguidos.
+- **Metas:** total definido por você, botões de mais e menos e barra de progresso.
+- **Anotações:** título e texto, com busca em tempo real.
+- **Ajustes:** nome, tema (automático, claro ou escuro), apagar dados e excluir conta.
+- **Responsivo:** no celular o menu lateral vira uma barra fixa na parte de baixo.
 
 ## Tecnologias
 
-- HTML para a estrutura das páginas;
-- CSS para o estilo e a adaptação a diferentes tamanhos de tela;
-- JavaScript nativo para interações no navegador;
-- `localStorage` ou uma API com banco de dados poderão ser avaliados para persistência. Nenhuma persistência está implementada atualmente.
+- HTML5
+- CSS3 (variáveis, grid, flexbox)
+- JavaScript (ES6+)
+- localStorage para persistência
+- Web Crypto API (SHA-256) para o hash das senhas
 
-Não há dependências de projeto ou processo de compilação configurados.
+## Como rodar
 
-## Como abrir
+Não precisa instalar nada.
 
-É possível abrir `index.html` no navegador, mas o arquivo está vazio no estado atual. Para visualizar a tela de cadastro, abra `pages/autenticacao/cadrastro.html`.
+1. Baixe ou clone o projeto.
+2. Abra o `index.html` no navegador.
 
-Também é possível servir a pasta do projeto localmente, por exemplo com a extensão **Live Server** do Visual Studio Code. Não é necessário instalar dependências para a interface estática existente.
+No VS Code, o jeito mais prático é usar a extensão **Live Server**: botão direito no `index.html` e **Open with Live Server**.
 
-Os estilos específicos das telas de autenticação estão em [`css/cadastro.css`](./css/cadastro.css) e [`css/login.css`](./css/login.css). Ambas usam o fundo local [`assets/auth-background.svg`](./assets/auth-background.svg).
+Na primeira vez, clique em **Criar conta**, preencha os dados e você já entra no painel.
+
+> As fontes vêm do Google Fonts. Sem internet o app funciona normalmente, só com a fonte padrão do sistema.
 
 ## Estrutura do projeto
 
-```text
-.
+```
+Alice-One/
 ├── index.html
 ├── README.md
-├── documentação.txt
+├── documentacao.txt
+├── .gitignore
 ├── assets/
-│   ├── auth-background.svg
-│   ├── icons/
-│   └── img/
 ├── css/
-│   ├── cadastro.css
-│   ├── login.css
+│   ├── style.css
 │   ├── responsivo.css
-│   └── style.css
+│   ├── login.css
+│   ├── cadastro.css
+│   └── landing.css
 ├── js/
-│   ├── anotacoes.js
-│   ├── app.js
-│   ├── cadastro.js
-│   ├── calendario.js
-│   ├── configuracoes.js
-│   ├── habitos.js
-│   ├── inicio.js
-│   ├── login.js
-│   ├── metas.js
 │   ├── storage.js
-│   └── tarefas.js
+│   ├── app.js
+│   ├── landing.js
+│   ├── login.js
+│   ├── cadastro.js
+│   ├── inicio.js
+│   ├── tarefas.js
+│   ├── calendario.js
+│   ├── habitos.js
+│   ├── metas.js
+│   ├── anotacoes.js
+│   └── configuracoes.js
 └── pages/
-    ├── anotacoes.html
-    ├── calendario.html
-    ├── configuraçoes.html
-    ├── habitos.html
     ├── inicio.html
-    ├── metas.html
     ├── tarefas.html
+    ├── calendario.html
+    ├── habitos.html
+    ├── metas.html
+    ├── anotacoes.html
+    ├── configuracoes.html
     └── autenticacao/
-        ├── cadrastro.html
-        └── login.html
+        ├── login.html
+        └── cadastro.html
 ```
 
-Arquivos vazios são pontos de partida reservados para futuras páginas e módulos. Os nomes `cadrastro.html` e `configuraçoes.html` contêm grafias não convencionais; foram mantidos para corresponder aos caminhos existentes.
+## Como o código se organiza
 
-## Estado das páginas
+| Arquivo | Responsabilidade |
+|---|---|
+| `js/storage.js` | Único ponto de acesso ao localStorage. Usuários, sessão e dados de cada coleção. |
+| `js/app.js` | Roda em todas as páginas internas: proteção de rota, menu lateral, tema e funções comuns. |
+| `js/<pagina>.js` | Lógica de uma página específica. |
+| `css/style.css` | Cores, tipografia e componentes usados em todo o app. |
+| `css/responsivo.css` | Ajustes para telas de até 760px. |
 
-| Área | Estado |
-| --- | --- |
-| Cadastro | Interface HTML/CSS e validação de confirmação de senha no navegador. Não cria conta nem envia dados a um serviço. |
-| Login | Interface HTML/CSS inicial. Não autentica usuários nem envia dados a um serviço. |
-| Início | Arquivo reservado; vazio. |
-| Tarefas | Arquivo reservado; vazio. |
-| Calendário | Arquivo reservado; vazio. |
-| Hábitos | Arquivo reservado; vazio. |
-| Metas | Arquivo reservado; vazio. |
-| Anotações | Arquivo reservado; vazio. |
-| Configurações | Arquivo reservado; vazio. |
-| Persistência | Não implementada. |
+Toda página interna carrega os scripts nesta ordem: `storage.js`, `app.js` e depois o script da própria página.
 
-## Próximas etapas sugeridas
+## Onde os dados ficam
 
-1. Criar uma página inicial e navegação entre as áreas.
-2. Implementar o cadastro e o login com validações e serviço de autenticação apropriado.
-3. Definir o modelo de dados e a persistência de tarefas.
-4. Implementar criação, edição, conclusão e remoção de tarefas.
-5. Integrar tarefas ao calendário e adicionar filtros por data, prioridade e estado.
-6. Desenvolver hábitos, metas, anotações e configurações.
-7. Adicionar testes e instruções de implantação quando houver lógica funcional.
+Tudo no `localStorage`, com o prefixo `af:`.
 
-## Segurança e dados
+| Chave | Conteúdo |
+|---|---|
+| `af:users` | Lista de contas cadastradas |
+| `af:session` | Id do usuário logado |
+| `af:<idUsuario>:tasks` | Tarefas |
+| `af:<idUsuario>:habits` | Hábitos |
+| `af:<idUsuario>:goals` | Metas |
+| `af:<idUsuario>:notes` | Anotações |
+| `af:<idUsuario>:cfg` | Preferências (tema) |
 
-As telas atuais são apenas interfaces no navegador. Não informe dados reais: os formulários não enviam dados a um sistema de autenticação. Em uma futura implementação, senhas devem ser tratadas por um serviço seguro e nunca armazenadas em texto puro no navegador.
+Para ver ou apagar manualmente: F12, aba **Application** (ou **Aplicativo**), **Local Storage**.
 
-## Documentação adicional
+## Personalizando o visual
 
-Consulte [`documentação.txt`](./documentação.txt) para a descrição detalhada do produto, das áreas previstas, dos dados e das etapas de implementação.
+As cores ficam no topo do `css/style.css`, em variáveis:
+
+```css
+:root{
+  --bg:#eef0f6;   /* fundo da página */
+  --card:#fff;    /* fundo dos cartões */
+  --tx:#1b1f3b;   /* texto */
+  --mu:#666b8a;   /* texto secundário */
+  --ln:#dcdfeb;   /* bordas */
+  --ac:#3b4fe0;   /* cor de destaque */
+  --ok:#1f9d6b;   /* sucesso */
+  --bad:#c93c4b;  /* erro e ações destrutivas */
+}
+```
+
+Para mudar a identidade do app inteiro, basta trocar esses valores. O tema escuro tem o próprio bloco logo abaixo, duplicado para o modo automático e para a escolha manual.
+
+## Limitações
+
+Este é um projeto de estudo. Vale saber:
+
+- Os dados ficam só no navegador e no aparelho em que foram criados. Não sincroniza entre dispositivos.
+- Limpar os dados do navegador apaga tudo, inclusive as contas.
+- Senhas são guardadas com SHA-256, sem sal. Não use uma senha que você usa em outros lugares.
+- A sessão não expira. Quem abrir o navegador depois continua logado até clicar em **Sair**.
+- Tarefas e anotações não podem ser editadas depois de criadas, só excluídas.
+
+## Próximos passos
+
+- Editar tarefas e anotações
+- Prioridade e categorias nas tarefas
+- Tarefas recorrentes
+- Exportar e importar dados em JSON
+- Lembretes com a Notification API
+- Backend com banco de dados para sincronizar entre aparelhos
+
+## Documentação
+
+A documentação técnica completa está em [`documentacao.txt`](documentacao.txt).
