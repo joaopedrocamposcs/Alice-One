@@ -1,6 +1,6 @@
 @media (max-width:760px){
 body[data-page]{grid-template-columns:1fr;padding-bottom:64px}
-nav{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px;border:0;border-top:1px solid var(--ln);background:var(--card);z-index:5;justify-content:space-around;overflow-x:auto}
+nav{position:fixed;inset:auto 0 0 0;height:auto;flex-direction:row;padding:6px;border:0;border-top:1px solid var(--ln);background:var(--vidro);z-index:5;justify-content:space-around;overflow-x:auto}
 .logo,.tag,.sair{display:none}
 nav a{padding:8px 6px;font-size:12px;text-align:center}
 .cols,.stats{grid-template-columns:1fr}

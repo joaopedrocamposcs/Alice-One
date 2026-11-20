@@ -1,0 +1,10 @@
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/pages/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

@@ -3,34 +3,143 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AliceFlow | Agenda para organizar seus dias</title>
+<meta name="theme-color" content="#6d4fc9">
+<title>AliceFlow | Agenda online para organizar sua rotina</title>
+<meta name="description" content="Organize tarefas, hábitos, metas e anotações em uma agenda online simples. Acesse seu espaço AliceFlow.">
+<link rel="canonical" href="https://aliceone.netlify.app/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:site_name" content="AliceFlow">
+<meta property="og:title" content="AliceFlow | Agenda online para organizar sua rotina">
+<meta property="og:description" content="Organize tarefas, hábitos, metas e anotações em uma agenda online simples. Acesse seu espaço AliceFlow.">
+<meta property="og:url" content="https://aliceone.netlify.app/">
+<meta property="og:image" content="https://aliceone.netlify.app/assets/og-image.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AliceFlow, agenda online para organizar a rotina">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AliceFlow | Agenda online para organizar sua rotina">
+<meta name="twitter:description" content="Organize tarefas, hábitos, metas e anotações em uma agenda online simples. Acesse seu espaço AliceFlow.">
+<meta name="twitter:image" content="https://aliceone.netlify.app/assets/og-image.webp">
+<meta name="twitter:image:alt" content="AliceFlow, agenda online para organizar a rotina">
 <link rel="stylesheet" href="css/style.css">
 <link rel="stylesheet" href="css/landing.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "name": "AliceFlow",
+      "url": "https://aliceone.netlify.app/",
+      "logo": "https://aliceone.netlify.app/assets/aliceflow-logo.webp"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "AliceFlow",
+      "url": "https://aliceone.netlify.app/",
+      "description": "Agenda online para organizar tarefas, hábitos, metas e anotações em um só lugar",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Web"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "O que é o AliceFlow?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "O AliceFlow é uma agenda online para organizar tarefas, hábitos, metas e anotações em um só lugar."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Como os dados ficam salvos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Seus dados ficam no armazenamento local do navegador deste dispositivo; eles não são enviados a um servidor."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso usar o AliceFlow no celular?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. A interface se adapta a telas de celular; você pode acessar no navegador do aparelho."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Posso acessar meus dados em outro dispositivo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Não. Os dados ficam no navegador e no dispositivo em que foram criados, sem sincronização entre aparelhos."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Preciso criar uma conta?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sim. Cadastre uma conta no AliceFlow para entrar e manter os dados de cada usuário separados no navegador."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Início",
+          "item": "https://aliceone.netlify.app/"
+        }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <header class="topo">
 <span class="logo">AliceFlow</span>
-<nav>
+<nav aria-label="Navegação principal">
 <a href="pages/autenticacao/login.html">Entrar</a>
 <a class="btn" id="topo-criar" href="pages/autenticacao/cadastro.html">Criar conta</a>
 </nav>
 </header>
-<section class="capa">
-<h1>Planeje, foque, conquiste.</h1>
+<main class="landing-main">
+<section class="capa" aria-labelledby="principal">
+<h1 id="principal">Planeje, foque, conquiste.</h1>
 <p>Tarefas, calendário, hábitos, metas e anotações num só lugar, sem distração e sem enrolação.</p>
 <div class="acoes">
 <a class="btn" id="criar" href="pages/autenticacao/cadastro.html">Começar agora</a>
 <a class="btn vazado" id="entrar" href="pages/autenticacao/login.html">Já tenho conta</a>
 </div>
 </section>
-<section class="recursos">
-<div><h3>Tarefas</h3><p>Crie, conclua e filtre por data, pendência ou o que vence hoje.</p></div>
-<div><h3>Calendário</h3><p>Veja o mês inteiro e abra qualquer dia para ver ou criar compromissos.</p></div>
-<div><h3>Hábitos</h3><p>Marque os últimos 7 dias e acompanhe sua sequência.</p></div>
-<div><h3>Metas</h3><p>Defina um total e avance aos poucos, com a barra de progresso.</p></div>
-<div><h3>Anotações</h3><p>Guarde ideias e busque por qualquer palavra.</p></div>
-<div><h3>Seus dados</h3><p>Tudo fica salvo no seu navegador, nada vai para servidor.</p></div>
+<section class="recursos" aria-labelledby="recursos-titulo">
+<h2 id="recursos-titulo">Tudo para organizar sua rotina</h2>
+<div class="recursos-grade">
+<article><h3>Tarefas</h3><p>Crie, conclua e filtre por data, pendência ou o que vence hoje.</p></article>
+<article><h3>Calendário</h3><p>Veja o mês inteiro e abra qualquer dia para ver ou criar compromissos.</p></article>
+<article><h3>Hábitos</h3><p>Marque os últimos 7 dias e acompanhe sua sequência.</p></article>
+<article><h3>Metas</h3><p>Defina um total e avance aos poucos, com a barra de progresso.</p></article>
+<article><h3>Anotações</h3><p>Guarde ideias e busque por qualquer palavra.</p></article>
+<article><h3>Seus dados</h3><p>Tudo fica salvo no seu navegador, nada vai para servidor.</p></article>
+</div>
 </section>
+<section class="faq" aria-labelledby="faq-titulo">
+<h2 id="faq-titulo">Perguntas frequentes</h2>
+<article><h3>O que é o AliceFlow?</h3><p>O AliceFlow é uma agenda online para organizar tarefas, hábitos, metas e anotações em um só lugar.</p></article>
+<article><h3>Como os dados ficam salvos?</h3><p>Seus dados ficam no armazenamento local do navegador deste dispositivo; eles não são enviados a um servidor.</p></article>
+<article><h3>Posso usar o AliceFlow no celular?</h3><p>Sim. A interface se adapta a telas de celular; você pode acessar no navegador do aparelho.</p></article>
+<article><h3>Posso acessar meus dados em outro dispositivo?</h3><p>Não. Os dados ficam no navegador e no dispositivo em que foram criados, sem sincronização entre aparelhos.</p></article>
+<article><h3>Preciso criar uma conta?</h3><p>Sim. Cadastre uma conta no AliceFlow para entrar e manter os dados de cada usuário separados no navegador.</p></article>
+</section>
+</main>
 <footer>AliceFlow</footer>
 <script src="js/storage.js"></script>
 <script src="js/landing.js"></script>
